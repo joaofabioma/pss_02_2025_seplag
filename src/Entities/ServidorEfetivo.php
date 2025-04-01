@@ -17,8 +17,22 @@ class ServidorEfetivo
     private string $matricula;
 
     // Getters and Setters
-    public function getPessoa(): Pessoa { return $this->pessoa; }
-    public function setPessoa(Pessoa $pessoa): self { $this->pessoa = $pessoa; return $this; }
-    public function getMatricula(): string { return $this->matricula; }
-    public function setMatricula(string $matricula): self { $this->matricula = $matricula; return $this; }
+    public function getPessoa(): Pessoa
+    {
+        return $this->pessoa;
+    }
+    public function setPessoa(Pessoa $pessoa): self
+    {
+        $this->pessoa = $pessoa;
+        return $this;
+    }
+    public function getMatricula(): string
+    {
+        return $this->matricula;
+    }
+    public function setMatricula(string $matricula): self
+    {
+        $this->matricula = $matricula;
+        return $this;
+    }
 }

@@ -20,10 +20,31 @@ class ServidorTemporario
     private ?\DateTimeInterface $dataDemissao = null;
 
     // Getters and Setters
-    public function getPessoa(): Pessoa { return $this->pessoa; }
-    public function setPessoa(Pessoa $pessoa): self { $this->pessoa = $pessoa; return $this; }
-    public function getDataAdmissao(): \DateTimeInterface { return $this->dataAdmissao; }
-    public function setDataAdmissao(\DateTimeInterface $dataAdmissao): self { $this->dataAdmissao = $dataAdmissao; return $this; }
-    public function getDataDemissao(): ?\DateTimeInterface { return $this->dataDemissao; }
-    public function setDataDemissao(?\DateTimeInterface $dataDemissao): self { $this->dataDemissao = $dataDemissao; return $this; }
+    public function getPessoa(): Pessoa
+    {
+        return $this->pessoa;
+    }
+    public function setPessoa(Pessoa $pessoa): self
+    {
+        $this->pessoa = $pessoa;
+        return $this;
+    }
+    public function getDataAdmissao(): \DateTimeInterface
+    {
+        return $this->dataAdmissao;
+    }
+    public function setDataAdmissao(\DateTimeInterface $dataAdmissao): self
+    {
+        $this->dataAdmissao = $dataAdmissao;
+        return $this;
+    }
+    public function getDataDemissao(): ?\DateTimeInterface
+    {
+        return $this->dataDemissao;
+    }
+    public function setDataDemissao(?\DateTimeInterface $dataDemissao): self
+    {
+        $this->dataDemissao = $dataDemissao;
+        return $this;
+    }
 }
