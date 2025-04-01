@@ -2,6 +2,8 @@
 
 namespace PSS0225Seplag\Config;
 
+use Dotenv\Dotenv;
+
 class DBConfig
 {
 	private static ?string $host = null;
@@ -10,6 +12,8 @@ class DBConfig
 	private static ?string $user = null;
 	private static ?string $password = null;
 	private static bool $loaded = false;
+	private static string $driver = 'pdo_pgsql';
+
 
 	private function __construct()
 	{
@@ -21,6 +25,9 @@ class DBConfig
 		if (self::$loaded) {
 			return;
 		}
+
+		$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+		$dotenv->safeLoad();
 
 		self::$host = self::getEnvWithDefault('DB_HOST', 'localhost');
 		self::$port = (int)self::getEnvWithDefault('DB_PORT', '5432');
@@ -44,6 +51,24 @@ class DBConfig
 		return self::$user ?? throw new \RuntimeException('usuario nao configurado');
 	}
 
+	// public static function getHost(): string
+	// {
+	// 	self::load();
+	// 	return self::$host ?? throw new \RuntimeException('host nao configurado');
+	// }
+
+	// public static function getPort(): int
+	// {
+	// 	self::load();
+	// 	return self::$port ?? throw new \RuntimeException('porta nao configurada');
+	// }
+
+	public static function getDbName(): string
+	{
+		self::load();
+		return self::$dbname ?? throw new \RuntimeException('databasename nao configurado');
+	}
+
 	public static function getPass(): string
 	{
 		self::load();
@@ -60,5 +85,19 @@ class DBConfig
 			self::$port ?? throw new \RuntimeException('porta nao configurada'),
 			self::$dbname ?? throw new \RuntimeException('nome do banco nao configurado')
 		);
+	}
+
+	public static function getParam(): array
+	{
+		self::load();
+		return [
+			'driver'   => self::$driver,
+			'host'     => self::$host,
+			'port'     => self::$port,
+			'user'     => self::$user,
+			'password' => self::$password,
+			'dbname'   => self::$dbname,
+			'charset'  => 'utf8',
+		];
 	}
 }
