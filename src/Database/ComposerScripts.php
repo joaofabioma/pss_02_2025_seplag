@@ -45,9 +45,8 @@ class ComposerScripts
             }
 
             $entityManager->getConnection()->connect();
-            $tables = $schemaManager->listTables();
-
-            if (empty($tables)) {
+            $tables = $schemaManager->listTableNames();
+            if (empty($tables) || (count($tables) === 1 && empty((array) $tables[0]))) {
                 $io->write('Criando tabelas...');
                 self::createSchema($event);
             } else {
