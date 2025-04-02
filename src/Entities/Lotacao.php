@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Lotacao
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(name: 'lot_id', type: 'integer')]
     private ?int $id = null;
 

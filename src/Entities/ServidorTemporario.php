@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ServidorTemporario
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(name: 'st_id', type: 'integer')]
     private ?int $id = null;
 

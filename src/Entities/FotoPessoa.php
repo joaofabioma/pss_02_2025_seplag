@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class FotoPessoa
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(name: 'fp_id', type: 'integer')]
     private ?int $id = null;
 

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ServidorEfetivo
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(name: 'se_id', type: 'integer')]
     private ?int $id = null;
 
