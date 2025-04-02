@@ -33,16 +33,16 @@ class Pessoa
     #[ORM\OneToOne(targetEntity: 'FotoPessoa', mappedBy: 'pessoa')]
     private ?FotoPessoa $foto = null;
 
-    #[ORM\ManyToMany(targetEntity: 'Endereco', inversedBy: 'pessoas')]
+    #[ORM\ManyToMany(targetEntity: Endereco::class, inversedBy: 'pessoas')]
     #[ORM\JoinTable(name: 'pessoa_endereco')]
     #[ORM\JoinColumn(name: 'pes_id', referencedColumnName: 'pes_id')]
     #[ORM\InverseJoinColumn(name: 'end_id', referencedColumnName: 'end_id')]
     private Collection $enderecos;
 
-    #[ORM\OneToOne(targetEntity: 'ServidorTemporario', mappedBy: 'pessoa')]
+    #[ORM\OneToMany(targetEntity: ServidorTemporario::class, mappedBy: 'pessoa')]
     private ?ServidorTemporario $servidorTemporario = null;
 
-    #[ORM\OneToOne(targetEntity: 'ServidorEfetivo', mappedBy: 'pessoa')]
+    #[ORM\OneToMany(targetEntity: ServidorEfetivo::class, mappedBy: 'pessoa')]
     private ?ServidorEfetivo $servidorEfetivo = null;
 
     #[ORM\OneToMany(targetEntity: Lotacao::class, mappedBy: 'pessoa')]
