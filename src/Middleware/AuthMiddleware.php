@@ -2,7 +2,9 @@
 
 namespace PSS0225Seplag\Middleware;
 
+use PSS0225Seplag\Config\JwtConfig;
 use PSS0225Seplag\Services\AuthService;
+use PSS0225Seplag\Services\JWTService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -10,10 +12,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AuthMiddleware
 {
     private $authService;
+    private $jwtService;
 
     public function __construct($pdo)
     {
         $this->authService = new AuthService($pdo);
+        $this->jwtService = new JWTService();
     }
 
     ////public function __invoke(Request $request, Response $handler, callable $next)
@@ -31,6 +35,16 @@ class AuthMiddleware
         $payload = $this->authService->validateToken($token);
 
         if (!$payload) {
+            if ($this->jwtService->canRenewToken($token)) {
+                $newToken = $this->jwtService->renewToken($token);
+                if ($newToken) {
+                    $response = $handler($request);
+                    if ($response instanceof Response) {
+                        $response->headers->set('X-Renewed-Token', $newToken);
+                        return $response;
+                    }
+                }
+            }
             error_log('Token inválido ou expirado');
             $response = new JsonResponse(['error' => 'Token Inválido ou Expirado'], Response::HTTP_UNAUTHORIZED);
             $response->send();
@@ -41,6 +55,15 @@ class AuthMiddleware
 
         $response = $handler($request);
 
+
+        if (isset($payload['exp'])) {
+            $remainingTime = $payload['exp'] - time();
+            $response->headers->set('X-Token-Expires-In', $remainingTime);
+
+            if ($remainingTime <= JwtConfig::getConfig()['renewal_window']) {
+                $response->headers->set('X-Token-Can-Renew', 'true');
+            }
+        }
         if ($response === null) {
             error_log('Handler did not return a response');
             return new JsonResponse(['error' => 'Handler did not return a response'], Response::HTTP_INTERNAL_SERVER_ERROR);

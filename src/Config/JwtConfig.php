@@ -9,7 +9,8 @@ class JwtConfig
         return [
             'secret' => 'secret_secret_secret',
             'algorithm' => 'HS256',
-            'expiration' => 3600 / 12
+            'expiration' => 300,
+            'renewal_window' => 60
         ];
     }
 }

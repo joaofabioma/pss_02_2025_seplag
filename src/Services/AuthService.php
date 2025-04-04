@@ -27,14 +27,14 @@ class AuthService
 	public function login($email, $password)
 	{
 		$user = $this->userModel->findByEmail($email);
-		if (!$user || !password_verify($password, $user['password'])) {
+		if (!$user || !password_verify($password, $user['us_password'])) {
 			throw new \Exception("Credenciais Invalidas");
 		}
 
 		return $this->jwtService->generateToken([
-			'id' => $user['id'],
-			'email' => $user['email'],
-			'role' => $user['role']
+			'id' => $user['us_id'],
+			'email' => $user['us_email'],
+			'role' => $user['us_role']
 		]);
 	}
 
